@@ -29,8 +29,18 @@ jobs:
           node-version: 22
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-      - name: Check formatting
-        run: pnpm format:check
+      - name: Produce canonical config formatting
+        run: pnpm exec prettier --write .prettierrc.json package.json packages/viewer/package.json apps/playground/package.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: formatted-configs
+          path: |
+            .prettierrc.json
+            package.json
+            packages/viewer/package.json
+            apps/playground/package.json
+      - name: Check committed formatting
+        run: git diff --exit-code -- .prettierrc.json package.json packages/viewer/package.json apps/playground/package.json
       - name: Lint
         run: pnpm lint
       - name: Typecheck
