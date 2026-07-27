@@ -136,14 +136,12 @@ export class EffectGraph {
     }
 
     if (effects.ssr.enabled) {
-      const reflection = ssr(
-        convertToTexture(current),
-        depth,
-        normal,
-        metalRough.r,
-        metalRough.g,
-        this.camera
-      );
+      const reflection = ssr(convertToTexture(current), depth, normal, {
+        metalnessNode: metalRough.r,
+        roughnessNode: metalRough.g,
+        diffuseNode: diffuse,
+        camera: this.camera
+      });
       this.applyNodeSettings(reflection, effects.ssr);
       this.track(reflection);
       current = vec4(current.rgb.add(reflection.rgb), current.a);
