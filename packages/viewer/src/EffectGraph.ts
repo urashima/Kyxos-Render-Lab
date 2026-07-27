@@ -207,13 +207,15 @@ export class EffectGraph {
     }
 
     if (effects.bloom.enabled) {
-      current = bloom(
-        convertToTexture(current),
+      const bloomInput = current;
+      const bloomNode = bloom(
+        convertToTexture(bloomInput),
         Number(effects.bloom.strength ?? 0.25),
         Number(effects.bloom.radius ?? 0.25),
         Number(effects.bloom.threshold ?? 1)
       );
-      this.track(current);
+      this.track(bloomNode);
+      current = vec4(bloomInput.rgb.add(bloomNode.rgb), bloomInput.a);
     }
 
     if (effects.dof.enabled) {
