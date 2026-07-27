@@ -36,7 +36,7 @@ export const EFFECT_DEFAULTS: Record<EffectName, EffectSettings> = {
     quality: 0.5,
     blurQuality: 1,
     maxDistance: 1,
-    opacity: 1,
+    intensity: 1,
     thickness: 0.03,
     resolutionScale: 0.5
   },
