@@ -6,12 +6,15 @@
 - Pull request: `#1` — merged
 - Merge commit: `2392875461a1951a9077204ac586690312080665`
 - Current branch: `main`
+- Stable tag: `v0.1.0`
+- Online verification tag: `pages-online-verified`
+- Public Playground: `https://urashima.github.io/Kyxos-Render-Lab/latest/`
 
 ## Current state
 
-The clean-room Kyxos Viewer implementation is merged. The feature branch passed frozen dependency installation, formatting, ESLint, TypeScript, Vitest, Vite production build, Chromium WebGL 2 fallback startup, and all static route smoke tests.
+The clean-room Kyxos Viewer implementation is merged and deployed through GitHub Pages. Frozen dependency installation, formatting, ESLint, TypeScript, Vitest, Vite production build, Chromium WebGL 2 fallback startup, and all static route smoke tests passed.
 
-GitHub Pages deployment is externally blocked because Pages has not yet been enabled for this new repository. The workflow contains the official `actions/configure-pages`, artifact upload, deployment, `/latest/` staging, manual dispatch, and post-deployment `v0.1.0` tag gate. The temporary `ci-pages-failed` tag records the current repository-setting blocker and is deleted automatically after a successful deployment.
+The post-deployment online gate successfully fetched the published `/latest/`, `/latest/overview/`, `/latest/full-stack/`, and `/latest/lifecycle/` routes and verified the Kyxos application shell. The previous `ci-pages-failed` marker was removed automatically after the successful deployment.
 
 ## Included
 
@@ -23,15 +26,15 @@ GitHub Pages deployment is externally blocked because Pages has not yet been ena
 - five quality presets
 - one routed Playground with all requested demos
 - public viewer API, metrics, capture, reset, dispose/recreate, and lifecycle suite
-- unit tests, Playwright smoke tests, CI, Pages workflow, and stable-tag release gate
+- unit tests, Playwright smoke tests, CI, Pages deployment, public-route verification, and stable-tag release gate
 
 ## Known validation limits
 
 - GPU frame time is reported as unavailable when the active backend does not expose a supported timestamp result through Three.js.
-- The lifecycle route executes the full 100/50 repetition acceptance suite in a real browser; CI runs the deterministic unit/build/route/backend smoke subset to avoid repeated remote asset downloads.
-- WebGPU visual acceptance requires opening the public Playground in a WebGPU-capable browser after Pages is enabled.
+- The lifecycle route provides the full 100/50 repetition acceptance suite; CI runs deterministic unit/build/route/backend checks and does not automatically execute the long interactive stress suite.
+- The online gate verifies deployment and route availability. Final WebGPU visual acceptance of TRAA stability, velocity, SSR, SSGI, temporal effects, and GPU timing still requires opening the public Playground in a WebGPU-capable browser.
 - The exact Three.js development commit is intentionally pinned and must be revalidated before any upstream upgrade.
 
 ## Next action
 
-In repository **Settings → Pages → Build and deployment → Source**, select **GitHub Actions**. Then run the **CI and Pages** workflow on `main`. A successful run deploys `/latest/`, removes `ci-pages-failed`, and creates stable tag `v0.1.0` automatically.
+Open the public `/latest/` Playground in a WebGPU-capable browser, confirm the metrics panel reports `webgpu`, then perform the visual and lifecycle acceptance checklist from the routed demos.
