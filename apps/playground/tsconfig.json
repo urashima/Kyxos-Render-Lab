@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@kyxos/viewer": ["../../packages/viewer/src/index.ts"]
+    }
+  },
+  "include": ["src", "vite.config.ts", "../../packages/viewer/src/three-shims.d.ts"]
+}
