@@ -27,10 +27,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: pnpm install --no-frozen-lockfile
-      - run: pnpm verify
-      - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm test:e2e
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+      - name: Check formatting
+        run: pnpm format:check
+      - name: Lint
+        run: pnpm lint
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Unit tests
+        run: pnpm test
+      - name: Build
+        run: pnpm build
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Browser smoke tests
+        run: pnpm test:e2e
       - uses: actions/upload-artifact@v4
         if: always()
         with:
