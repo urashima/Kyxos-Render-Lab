@@ -1,4 +1,5 @@
 name: CI and Pages
+# GitHub Pages source enabled by repository owner; this commit triggers the final deployment gate.
 
 on:
   push:
