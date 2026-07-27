@@ -12,14 +12,18 @@ test('WebGL2 fallback boots the shared playground and exposes metrics', async ({
   expect(errors).toEqual([]);
 });
 
-test('high preset renders visible scene pixels with bloom enabled', async ({ page }) => {
+test('bloom preserves visible scene pixels instead of replacing the scene', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (error) => errors.push(error.message));
 
-  await page.goto('overview/?backend=webgl2');
-  await expect(page.getByRole('heading', { name: 'Complete WebGPU Viewer' })).toBeVisible();
+  await page.goto('performance/?backend=webgl2');
+  await expect(page.getByRole('heading', { name: 'Performance' })).toBeVisible();
   await expect(page.locator('#status')).toContainText('Ready', { timeout: 45_000 });
   await expect(page.locator('#metrics')).toContainText('webgl2');
+
+  const bloomToggle = page.locator('input[data-effect="bloom"][data-key="enabled"]');
+  await expect(bloomToggle).not.toBeChecked();
+  await bloomToggle.check();
 
   const pixelStats = await page.evaluate(async () => {
     const canvas = document.querySelector<HTMLCanvasElement>('#viewer-canvas');
